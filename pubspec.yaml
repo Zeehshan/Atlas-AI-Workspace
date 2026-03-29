@@ -1,0 +1,31 @@
+name: faiapp
+description: Production-ready AI workspace built with Flutter and a Dart Genkit backend.
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  connectivity_plus: ^6.1.5
+  cupertino_icons: ^1.0.8
+  dio: ^5.9.0
+  flutter_riverpod: ^2.6.1
+  flutter_secure_storage: ^9.2.4
+  go_router: ^16.0.0
+  google_fonts: ^6.3.1
+  intl: ^0.20.2
+  logger: ^2.6.1
+  shared_contracts:
+    path: packages/shared_contracts
+  shared_preferences: ^2.5.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

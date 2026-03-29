@@ -1,0 +1,7 @@
+{
+  "APP_NAME": "Atlas AI Workspace",
+  "APP_ENV": "production",
+  "API_BASE_URL": "https://api.example.com",
+  "REQUEST_TIMEOUT_SECONDS": "30",
+  "ENABLE_VERBOSE_LOGS": "false"
+}

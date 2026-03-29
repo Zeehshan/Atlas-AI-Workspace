@@ -1,0 +1,7 @@
+{
+  "APP_NAME": "Atlas AI Workspace",
+  "APP_ENV": "development",
+  "API_BASE_URL": "http://localhost:8080",
+  "REQUEST_TIMEOUT_SECONDS": "30",
+  "ENABLE_VERBOSE_LOGS": "true"
+}
