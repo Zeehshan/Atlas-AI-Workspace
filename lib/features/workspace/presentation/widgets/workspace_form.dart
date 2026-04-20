@@ -18,14 +18,14 @@ class WorkspaceForm extends StatefulWidget {
 
 class _WorkspaceFormState extends State<WorkspaceForm> {
   static const _providerChoices = [
+    AiProviderOption.openai,
     AiProviderOption.google,
     AiProviderOption.anthropic,
   ];
 
   final _formKey = GlobalKey<FormState>();
   final _goalController = TextEditingController(
-    text:
-        'Launch an AI planning workspace for product and engineering leaders.',
+    text: 'Launch an AI planning product for product and engineering leaders.',
   );
   final _audienceController = TextEditingController(
     text: 'Product managers, engineering managers, and solution architects',
@@ -62,39 +62,47 @@ class _WorkspaceFormState extends State<WorkspaceForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Create a workspace plan',
+            'Plan your initiative',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 12),
           Text(
-            'This form sends structured input to the backend Genkit flow. The backend handles prompt orchestration, tool usage, validation, and provider selection.',
+            'Turn a product or engineering brief into a structured execution plan with milestones, risks, and rollout steps.',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 24),
           TextFormField(
             controller: _goalController,
             maxLines: 2,
-            decoration: const InputDecoration(labelText: 'Goal'),
+            decoration: const InputDecoration(
+              labelText: 'What are you trying to accomplish?',
+            ),
             validator: _requiredValidator,
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _audienceController,
             maxLines: 2,
-            decoration: const InputDecoration(labelText: 'Target audience'),
+            decoration: const InputDecoration(
+              labelText: 'Who is this for?',
+            ),
             validator: _requiredValidator,
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _successController,
             maxLines: 3,
-            decoration: const InputDecoration(labelText: 'Success definition'),
+            decoration: const InputDecoration(
+              labelText: 'How will you define success?',
+            ),
             validator: _requiredValidator,
           ),
           const SizedBox(height: 16),
           DropdownButtonFormField<AiProviderOption>(
             initialValue: _selectedProvider,
-            decoration: const InputDecoration(labelText: 'Preferred provider'),
+            decoration: const InputDecoration(
+              labelText: 'Preferred AI provider',
+            ),
             items: [
               for (final provider in _providerChoices)
                 DropdownMenuItem(value: provider, child: Text(provider.label)),
@@ -121,7 +129,9 @@ class _WorkspaceFormState extends State<WorkspaceForm> {
           TextFormField(
             controller: _notesController,
             maxLines: 5,
-            decoration: const InputDecoration(labelText: 'Additional notes'),
+            decoration: const InputDecoration(
+              labelText: 'Context or additional notes',
+            ),
           ),
           const SizedBox(height: 22),
           FilledButton(
@@ -152,7 +162,7 @@ class _WorkspaceFormState extends State<WorkspaceForm> {
                     dimension: 22,
                     child: CircularProgressIndicator(strokeWidth: 2.4),
                   )
-                : const Text('Generate plan'),
+                : const Text('Create execution plan'),
           ),
         ],
       ),

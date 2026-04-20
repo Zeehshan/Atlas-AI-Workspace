@@ -26,6 +26,8 @@ class AppShell extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final showRail = constraints.maxWidth >= 900;
+          final bottomInset = MediaQuery.paddingOf(context).bottom;
+          final mobileNavHeight = 84.0 + bottomInset;
           final scaffoldBody = showRail
               ? Row(
                   children: [
@@ -33,7 +35,10 @@ class AppShell extends StatelessWidget {
                     Expanded(child: child),
                   ],
                 )
-              : child;
+              : Padding(
+                  padding: EdgeInsets.only(bottom: mobileNavHeight),
+                  child: child,
+                );
 
           return Scaffold(
             backgroundColor: Colors.transparent,
@@ -98,18 +103,39 @@ class _ShellBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationBar(
-      selectedIndex: AppDestination.values.indexOf(current),
-      onDestinationSelected: (index) {
-        context.go(AppDestination.values[index].location);
-      },
-      destinations: [
-        for (final destination in AppDestination.values)
-          NavigationDestination(
-            icon: Icon(destination.icon),
-            label: destination.label,
-          ),
-      ],
+    return SafeArea(
+      top: false,
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.96),
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(color: AppColors.border),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x14000000),
+              blurRadius: 28,
+              offset: Offset(0, 12),
+            ),
+          ],
+        ),
+        child: NavigationBar(
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          indicatorColor: AppColors.secondary.withValues(alpha: 0.14),
+          selectedIndex: AppDestination.values.indexOf(current),
+          onDestinationSelected: (index) {
+            context.go(AppDestination.values[index].location);
+          },
+          destinations: [
+            for (final destination in AppDestination.values)
+              NavigationDestination(
+                icon: Icon(destination.icon),
+                label: destination.label,
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -18,6 +18,9 @@ class WorkspaceScreen extends ConsumerWidget {
     final isConnected = ref
         .watch(connectionStatusProvider)
         .maybeWhen(data: (value) => value, orElse: () => true);
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final horizontalPadding = screenWidth < 600 ? 16.0 : 24.0;
+    final verticalPadding = screenWidth < 600 ? 16.0 : 24.0;
 
     ref.listen(
       workspaceControllerProvider.select((value) => value.errorMessage),
@@ -33,7 +36,12 @@ class WorkspaceScreen extends ConsumerWidget {
     );
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.fromLTRB(
+        horizontalPadding,
+        verticalPadding,
+        horizontalPadding,
+        verticalPadding + 8,
+      ),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1440),
         child: LayoutBuilder(
@@ -64,7 +72,12 @@ class WorkspaceScreen extends ConsumerWidget {
 
             return stacked
                 ? Column(
-                    children: [leftPane, const SizedBox(height: 24), rightPane],
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      leftPane,
+                      const SizedBox(height: 20),
+                      rightPane,
+                    ],
                   )
                 : Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,10 +123,13 @@ class _WorkspaceHero extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 18),
-        Text('AI planning workspace', style: theme.textTheme.displayMedium),
+        Text(
+          'Plan your initiative',
+          style: theme.textTheme.displayMedium?.copyWith(fontSize: 34),
+        ),
         const SizedBox(height: 12),
         Text(
-          'Turn a product, delivery, or operations brief into a structured execution plan with reusable backend flows, typed outputs, and provider-aware orchestration.',
+          'Turn a product, delivery, or operations brief into a structured execution plan with milestones, risks, and rollout guidance.',
           style: theme.textTheme.bodyLarge,
         ),
       ],

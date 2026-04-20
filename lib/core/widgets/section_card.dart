@@ -13,6 +13,11 @@ class SectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
+      shadowColor: Colors.transparent,
+      color: Colors.white.withValues(alpha: 0.97),
+      surfaceTintColor: Colors.transparent,
+      clipBehavior: Clip.antiAlias,
       child: Padding(padding: padding, child: child),
     );
   }

@@ -21,18 +21,20 @@ class WorkspaceResultPanel extends StatelessWidget {
     if (plan == null) {
       return const EmptyStateCard(
         icon: Icons.auto_awesome_rounded,
-        title: 'No plan generated yet',
+        title: 'No execution plan yet',
         message:
-            'Submit a goal to generate a structured execution plan from the backend Genkit workflow.',
+            'Describe your initiative to generate a structured plan with milestones, risks, and follow-up questions.',
       );
     }
 
     final theme = Theme.of(context);
+    final compact = MediaQuery.sizeOf(context).width < 700;
     final dateLabel = DateFormat(
       'MMM d, y • HH:mm',
     ).format(plan!.generatedAt.toLocal());
 
     return SectionCard(
+      padding: EdgeInsets.all(compact ? 18 : 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,7 +55,10 @@ class WorkspaceResultPanel extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 18),
-          Text(plan!.executiveSummary, style: theme.textTheme.headlineMedium),
+          Text(
+            plan!.executiveSummary,
+            style: theme.textTheme.headlineMedium?.copyWith(height: 1.2),
+          ),
           const SizedBox(height: 8),
           Text(
             'Generated $dateLabel',
@@ -95,14 +100,21 @@ class WorkspaceResultPanel extends StatelessWidget {
             runSpacing: 10,
             children: [
               for (final insight in plan!.toolInsights)
-                Chip(
-                  label: SizedBox(
-                    width: 220,
-                    child: Text(
-                      '${insight.name}: ${insight.reason}',
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                Container(
+                  constraints: BoxConstraints(
+                    maxWidth: compact ? double.infinity : 240,
+                  ),
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(color: AppColors.border),
+                  ),
+                  child: Text(
+                    '${insight.name}: ${insight.reason}',
+                    maxLines: compact ? 5 : 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodyMedium,
                   ),
                 ),
             ],
@@ -184,9 +196,16 @@ class _TimelineCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppColors.paleBlue.withValues(alpha: 0.45),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: AppColors.border),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0D000000),
+            blurRadius: 18,
+            offset: Offset(0, 8),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +239,7 @@ class _RiskCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppColors.paleGold.withValues(alpha: 0.5),
+        color: const Color(0xFFFFF8EE),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: AppColors.border),
       ),
